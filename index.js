@@ -16,9 +16,9 @@ var database = firebase.database()
 const submitButton = document.querySelector("#submit")
 const chat = document.querySelector(".chat")
 var ID = database.ref("ID/").on("child_changed", (snapshot) => {
-    var snapshot = snapshot.val()
-    if (snapshot.TYPE === "ID") {
-        return snapshot.VALUE
+    var o = snapshot.val()
+    if (o.TYPE === "ID") {
+        return o.VALUE
     }
 })
 .then(() =>{
