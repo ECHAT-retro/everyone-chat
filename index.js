@@ -60,7 +60,7 @@ function save() {
 
 function clientSend(text,server,error = false,name = 0) {
     var send = document.createElement("p")
-    send.innerText = text
+    send.innerText = `⠀${text}`
     if (server === true)
     {
         send.classList.add("server");
@@ -79,10 +79,24 @@ function clientSend(text,server,error = false,name = 0) {
 submitButton.addEventListener("click",save)
 database.ref('mails/').on('child_added', (snapshot, prevChildKey) => {
     const newSend = snapshot.val()
-    clientSend(`${newSend.username}>>>${newSend.text}`,newSend.special,newSend.ID)
+    clientSend(`${newSend.username}⠀>>>⠀${newSend.text}`,newSend.special,newSend.ID)
     console.log(newSend)
     console.log(document.getElementById(`${snapshot.ID}`))
 })
 database.ref('mails/').on('child_removed', (snapshot) => {
     chat.innerHTML = '<p class="server"><== Server Turned On ==></p><p class="server">Server Is Online...</p><p class="server">server refreshed by owner</p>'
+})
+
+
+const openmenubtn = document.querySelector("#menu").querySelector("img")
+openmenubtn.addEventListener("mouseenter", () => {
+    openmenubtn.src = "favicon.gif"
+})
+
+openmenubtn.addEventListener("mouseleave", () => {
+    openmenubtn.src = "unfavicon.png"
+})
+
+openmenubtn.addEventListener("click", () => {
+    openmenubtn.src = "favicon.png"
 })
