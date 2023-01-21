@@ -15,12 +15,10 @@ firebase.initializeApp(firebaseConfig);
 var database = firebase.database()
 const submitButton = document.querySelector("#submit")
 const chat = document.querySelector(".chat")
-var ID = database.ref("ID/").on("child_changed", (snapshot) => {
-    const o = snapshot.val()
-    if (o.TYPE === "ID") {
-        return o.VALUE
-    }
-})
+var ID;
+database.ref("ID/ID").on("value", (snapshot) => {
+    ID = snapshot.val()
+});
 console.log(ID)
 
 function save() {
@@ -41,7 +39,8 @@ function save() {
             var command = text
             switch (command) {
                 case "cls":
-                  database.ref("mails/").remove()  
+                  database.ref("mails/").remove() 
+                  database.ref('ID/ID').set(0) 
             }
         } else {
             database.ref('mails/' + ID).set({
@@ -52,14 +51,14 @@ function save() {
             })
         }
 
-        databaseURL.ref('ID/VALUE').set(ID++)
-        
+        database.ref('ID/ID').set(ID++)
+
     } else {
         clientSend("server>>> you can`t to be owner",true,true)
     }
 }
 
-function clientSend(text,server,error = false,name = "") {
+function clientSend(text,server,error = false,name = 0) {
     var send = document.createElement("p")
     send.innerText = text
     if (server === true)
@@ -72,16 +71,18 @@ function clientSend(text,server,error = false,name = "") {
     } else {
         send.classList.add("message");
     }
-    send.id = name
+    send.id = `${name}`
     chat.appendChild(send);
+    
 }
 
 submitButton.addEventListener("click",save)
 database.ref('mails/').on('child_added', (snapshot, prevChildKey) => {
     const newSend = snapshot.val()
     clientSend(`${newSend.username}>>>${newSend.text}`,newSend.special,newSend.ID)
+    console.log(newSend)
+    console.log(document.getElementById(`${snapshot.ID}`))
 })
 database.ref('mails/').on('child_removed', (snapshot) => {
-    const Send = document.getElementById(snapshot.ID)
-    database.ref('ID/VALUE').set(0)
+    chat.innerHTML = '<p class="server"><== Server Turned On ==></p><p class="server">Server Is Online...</p><p class="server>server refreshed by owner</p>'
 })
