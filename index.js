@@ -23,10 +23,6 @@ var ID = database.ref("ID/").on("child_changed", (snapshot) => {
 })
 console.log(ID)
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
-
 function save() {
     var username = document.querySelector("#username").value
     var text = document.querySelector("#text").value
