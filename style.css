@@ -1,0 +1,58 @@
+body {
+    background-color: gray;
+    margin: 0;
+}
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+}
+
+.server {
+    color: yellow;
+}
+
+input {
+    border-style: none;
+    outline-style: none;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+}
+
+#submit {
+    border-style: none;
+    outline-style: none;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+}
+
+#submit:hover {
+    background-color: aliceblue;
+    color: black;
+}
+
+input:hover {
+    background-color: aliceblue;
+    color: black;
+}
+.form {
+    background-color: darkgray;
+    height: 80px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.client-error {
+    background-color: red;
+}
+
+.server {
+
+}
+.message {
+    
+}
