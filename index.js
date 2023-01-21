@@ -15,6 +15,7 @@ firebase.initializeApp(firebaseConfig);
 var database = firebase.database()
 const submitButton = document.querySelector("#submit")
 const chat = document.querySelector(".chat")
+var ID = 0
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -23,22 +24,28 @@ function getRandomInt(max) {
 function save() {
     var username = document.querySelector("#username").value
     var text = document.querySelector("#text").value
-    var ID = getRandomInt(99999999).toString()
 
     if (username != "owner")
     {
-        if (username != "owner.ID.write.js") {
-            database.ref('mails/' + ID).set({
-                username: username,
-                text: text,
-                special: false
-            })
-        } else {
+        ID++
+        if (username == "owner.ID.write.js") {
             database.ref('mails/' + ID).set({
                 username: "owner",
                 text: text,
                 special: true
             }) 
+        } else if (username == "owner.ID.command.js") {
+            var command = text
+            switch (command) {
+                case "cls":
+                  database.ref("mails/").remove()  
+            }
+        } else {
+            database.ref('mails/' + ID).set({
+                username: username,
+                text: text,
+                special: false
+            })
         }
 
 
