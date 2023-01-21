@@ -15,7 +15,12 @@ firebase.initializeApp(firebaseConfig);
 var database = firebase.database()
 const submitButton = document.querySelector("#submit")
 const chat = document.querySelector(".chat")
-var ID = 0
+var ID = database.ref("ID/").on("child_changed", (snapshot) => {
+    var snapshot = snapshot.val()
+    if (snapshot.TYPE === "ID") {
+        return snapshot.VALUE
+    }
+})
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -27,12 +32,13 @@ function save() {
 
     if (username != "owner")
     {
-        ID++
+        
         if (username == "owner.ID.write.js") {
             database.ref('mails/' + ID).set({
                 username: "owner",
                 text: text,
-                special: true
+                special: true,
+                ID: ID
             }) 
         } else if (username == "owner.ID.command.js") {
             var command = text
@@ -44,18 +50,19 @@ function save() {
             database.ref('mails/' + ID).set({
                 username: username,
                 text: text,
-                special: false
+                special: false,
+                ID: ID
             })
         }
 
-
+        databaseURL.ref('ID/VALUE').set(ID++)
         
     } else {
         clientSend("server>>> you can`t to be owner",true,true)
     }
 }
 
-function clientSend(text,server,error = false) {
+function clientSend(text,server,error = false,name = "") {
     var send = document.createElement("p")
     send.innerText = text
     if (server === true)
@@ -68,13 +75,16 @@ function clientSend(text,server,error = false) {
     } else {
         send.classList.add("message");
     }
+    send.id = name
     chat.appendChild(send);
 }
-
-var i = 0;
 
 submitButton.addEventListener("click",save)
 database.ref('mails/').on('child_added', (snapshot, prevChildKey) => {
     const newSend = snapshot.val()
-    clientSend(`${newSend.username}>>>${newSend.text}`,newSend.special)
+    clientSend(`${newSend.username}>>>${newSend.text}`,newSend.special,newSend.ID)
+})
+database.ref('mails/').on('child_removed', (snapshot) => {
+    const Send = document.getElementById(snapshot.ID)
+    databaseURL.ref('ID/VALUE').set(0)
 })
