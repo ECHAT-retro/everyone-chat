@@ -22,6 +22,8 @@ var ID = database.ref("ID/").on("child_changed", (snapshot) => {
     }
 })
 
+console.log(ID)
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
@@ -86,5 +88,5 @@ database.ref('mails/').on('child_added', (snapshot, prevChildKey) => {
 })
 database.ref('mails/').on('child_removed', (snapshot) => {
     const Send = document.getElementById(snapshot.ID)
-    databaseURL.ref('ID/VALUE').set(0)
+    database.ref('ID/VALUE').set(0)
 })
