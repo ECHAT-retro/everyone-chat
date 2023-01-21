@@ -21,8 +21,9 @@ var ID = database.ref("ID/").on("child_changed", (snapshot) => {
         return snapshot.VALUE
     }
 })
-
-console.log(ID)
+.then(() =>{
+    console.log(`ID ${ID}`)
+})
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
