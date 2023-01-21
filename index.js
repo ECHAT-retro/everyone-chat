@@ -84,5 +84,5 @@ database.ref('mails/').on('child_added', (snapshot, prevChildKey) => {
     console.log(document.getElementById(`${snapshot.ID}`))
 })
 database.ref('mails/').on('child_removed', (snapshot) => {
-    chat.innerHTML = '<p class="server"><== Server Turned On ==></p><p class="server">Server Is Online...</p><p class="server>server refreshed by owner</p>'
+    chat.innerHTML = '<p class="server"><== Server Turned On ==></p><p class="server">Server Is Online...</p><p class="server">server refreshed by owner</p>'
 })
