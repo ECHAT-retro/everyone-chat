@@ -1,4 +1,3 @@
-// Your web app's Firebase configuration
 var firebaseConfig = {
     apiKey: "AIzaSyCtoFG0U0oKWLpuLB_IcJu-2wNTWy0HLVg",
     authDomain: "chat-93660.firebaseapp.com",
@@ -8,10 +7,10 @@ var firebaseConfig = {
     messagingSenderId: "654283406396",
     appId: "1:654283406396:web:581576964b6217f3279739"
 };
-// Initialize Firebase
+
 firebase.initializeApp(firebaseConfig);
 
-// Set database variable
+
 var database = firebase.database()
 const submitButton = document.querySelector("#submit")
 const chat = document.querySelector(".chat")
